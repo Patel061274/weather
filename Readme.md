@@ -152,7 +152,7 @@ Total elapsed time: 67.87534189224243
 ```
 
 ### Generate Weather Stts analysis data
-
+```
 `generate_weather_stats` is management command to generate the analysis data from weather data loaded in last step.
 
 (.weather_env) daemon-2 weather % python manage.py generate_weather_stats
@@ -176,9 +176,10 @@ This password is too short. It must contain at least 8 characters.
 This password is too common.
 Bypass password validation and create user anyway? [y/N]: y
 Superuser created successfully.
+
 ```
 
-Run Application
+#### Run Application
 
 ```
 (.weather_env) daemon-2 weather % python manage.py runserver
@@ -190,9 +191,12 @@ February 17, 2023 - 17:19:06
 Django version 4.1.6, using settings 'weather.settings'
 Starting development server at http://127.0.0.1:8000/
 Quit the server with CONTROL-C.
+
 ```
 
 ### API's
+
+```
 
 - http://127.0.0.1:8000/api/weather
 - http://127.0.0.1:8000/api/weather/stats
