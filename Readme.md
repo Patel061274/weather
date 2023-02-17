@@ -3,119 +3,223 @@
 This project contains the real time implementation of the weather analysis 
 of existing dataset provided from the [source data](https://github.com/corteva/code-challenge-template/blob/main/wx_data/)
 
-### Problem Statement.
+The project is developed with following technical skillsets
+
+| No  |  Skill |  Description |
+| ------------ | ------------ | ------------ |
+|  1 | Python  |  Programming Language |
+|  2 |  Django |  Frame work |
+|  3 |  Django RestFramework |  To Develop Rest API's |
+|  4 |  Sqlite3 |   Database|
+| 5  |  Swagger |   API documentation|
 
 
-This coding exercise will help us understand how you approach some of the common problems we see in data engineering. Ask questions if things are unclear, use best practices and common software patterns, and feel free to go the extra mile to show off your skills. Imagine you are handing off your completed project to someone else to maintain -- it should be clear to another developer how things work and your reasoning behind your design decisions.
 
-You will be asked to ingest some weather and crop yield data (provided), design a database schema for it, and expose the data through a REST API. You may use whatever software tools you would like to answer the problems below, but keep in mind the skills required for the position you are applying for and how best to demonstrate them. Read through all the problems before beginning, as later problems may inform your approach to earlier problems.
+## Installation
 
-You can retrieve the data required for this exercise by cloning this repository:
-https://github.com/corteva/code-challenge-template
-
-Weather Data Description
-------------------------
-
-The wx_data directory has files containing weather data records from 1985-01-01 to 2014-12-31. Each file corresponds to a particular weather station from Nebraska, Iowa, Illinois, Indiana, or Ohio.
-
-Each line in the file contains 4 records separated by tabs: 
-
-1. The date (YYYYMMDD format)
-2. The maximum temperature for that day (in tenths of a degree Celsius)
-3. The minimum temperature for that day (in tenths of a degree Celsius)
-4. The amount of precipitation for that day (in tenths of a millimeter)
-
-Missing values are indicated by the value -9999.
-
-Problem 1 - Data Modeling
--------------------------
-Choose a database to use for this coding exercise (SQLite, Postgres, etc.). Design a data model to represent the weather data records. If you use an ORM, your answer should be in the form of that ORM's data definition format. If you use pure SQL, your answer should be in the form of DDL statements.
-
-Problem 2 - Ingestion
----------------------
-Write code to ingest the weather data from the raw text files supplied into your database, using the model you designed. Check for duplicates: if your code is run twice, you should not end up with multiple rows with the same data in your database. Your code should also produce log output indicating start and end times and number of records ingested.
-
-Problem 3 - Data Analysis
--------------------------
-For every year, for every weather station, calculate:
-
-* Average maximum temperature (in degrees Celsius)
-* Average minimum temperature (in degrees Celsius)
-* Total accumulated precipitation (in centimeters)
-
-Ignore missing data when calculating these statistics.
-
-Design a new data model to store the results. Use NULL for statistics that cannot be calculated.
-
-Your answer should include the new model definition as well as the code used to calculate the new values and store them in the database.
-
-Problem 4 - REST API
---------------------
-Choose a web framework (e.g. Flask, Django REST Framework). Create a REST API with the following GET endpoints:
-
-/api/weather
-/api/weather/stats
-
-Both endpoints should return a JSON-formatted response with a representation of the ingested/calculated data in your database. Allow clients to filter the response by date and station ID (where present) using the query string. Data should be paginated.
-
-Include a Swagger/OpenAPI endpoint that provides automatic documentation of your API.
-
-Your answer should include all files necessary to run your API locally, along with any unit tests.
-
-
-------------
-
-###  How to install
-
-Clone the directory into the local directory using `git clone <repo name>`
-
-``````shell
-daemon-2  %  git clone <repo name>
-daemon-2  %  cd weather
-daemon-2 weather %  virtualenv .weather_ase
-daemon-2 weather % source ./.weather_ase/bin/activate
-(.weather_ase) renjithsraj@daemon-2 weather % pip install -r requirements.txt
+#### Clone directory
 ```
+daemon-2 ripend_pro % git clone https://github.com/Patel061274/weather.git 
 
-### Pre Run Activities
-
-```shell
-(.weather_ase) daemon-2 weather % python manage.py makemigrations home
-(.weather_ase) daemon-2 weather % python manage.py migrate
+Cloning into 'weather'...
+remote: Enumerating objects: 208, done.
+remote: Counting objects: 100% (208/208), done.
+remote: Compressing objects: 100% (205/205), done.
+remote: Total 208 (delta 1), reused 208 (delta 1), pack-reused 0
+Receiving objects: 100% (208/208), 11.57 MiB | 9.70 MiB/s, done.
+Resolving deltas: 100% (1/1), done.
+daemon-2 ripend_pro % 
+```
+#### Export Project 
 
 ```
-
-### Load Data
-
-To load the data into the table use below management command., this command will load the data into the table using pandas and bulk create using django ORM. 
-
-Ingest the weather data from the raw text files supplied into your database, using the model you designed. Check for duplicates: if your code is run twice, you should not end up with multiple rows with the same data in your database. Your code should also produce log output indicating start and end times and number of records ingested.
-
-
-```shell
-(weather_ase) daemon-2 weather % python manage.py extract_data
+daemon-2 ripend_pro % cd weather
+daemon-2 weather % tree
+.
+├── Readme.md
+├── home
+│   ├── __init__.py
+│   ├── admin.py
+│   ├── apps.py
+│   ├── management
+│   │   ├── __init__.py
+│   │   └── commands
+│   │       ├── __init__.py
+│   │       ├── extract_data.py
+│   │       └── generate_weather_stats.py
+│   ├── migrations
+│   │   ├── 0001_initial.py
+│   │   └── __init__.py
+│   ├── models.py
+│   ├── pagination.py
+│   ├── serializers.py
+│   ├── tests.py
+│   ├── urls.py
+│   └── views.py
+├── manage.py
+├── requirements.txt
+├── weather
+│   ├── __init__.py
+│   ├── asgi.py
+│   ├── settings.py
+│   ├── urls.py
+│   └── wsgi.py
+└── wx_data
+    ├── USC00110072.txt
+    ├── USC00110187.txt
+    ├── USC00110338.txt
+    ├── USC00111280.txt
+    .........
+    .........
 ```
 
-### Generate Analytical Data
+### Install Requirements
 
-To load the analytical data into the db using below management command. This command will loaded the data for below points.
-
-For every year, for every weather station, calculate:
-
-* Average maximum temperature (in degrees Celsius)
-* Average minimum temperature (in degrees Celsius)
-* Total accumulated precipitation (in centimeters)
-
-```shell
-(.weather_ase) daemon-2 weather % python manage.py generate_weather_stats
+```
+daemon-2 weather % virtualenv .weather_env
+daemon-2 weather % source ./.weather_env/bin/activate
+(.weather_env)daemon-2 weather %
+(.weather_env) daemon-2 weather % pip install -r requirements.txt
+(.weather_env) renjithsraj@daemon-2 weather % pip freeze
+appnope==0.1.3
+asgiref==3.6.0
+asttokens==2.2.1
+backcall==0.2.0
+certifi==2022.12.7
+charset-normalizer==3.0.1
+coreapi==2.3.3
+coreschema==0.0.4
+decorator==5.1.1
+Django==4.1.6
+django-rest-fr ..
+....
 ```
 
-### How to Run
-```shell
-(.weather_ase) daemon-2 weather % python manage.py runserver
+### DB Configuration
+
+```
+(.weather_env) daemon-2 weather % python manage.py makemigrations home
+No changes detected in app 'home'
+
+(.weather_env) daemon-2 weather % python manage.py migrate
+Operations to perform:
+  Apply all migrations: admin, auth, contenttypes, home, sessions
+Running migrations:
+  Applying contenttypes.0001_initial... OK
+  Applying auth.0001_initial... OK
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying contenttypes.0002_remove_content_type_name... OK
+  Applying auth.0002_alter_permission_name_max_length... OK
+  Applying auth.0003_alter_user_email_max_length... OK
+  Applying auth.0004_alter_user_username_opts... OK
+  Applying auth.0005_alter_user_last_login_null... OK
+  Applying auth.0006_require_contenttypes_0002... OK
+  Applying auth.0007_alter_validators_add_error_messages... OK
+  Applying auth.0008_alter_user_username_max_length... OK
+  Applying auth.0009_alter_user_last_name_max_length... OK
+  Applying auth.0010_alter_group_name_max_length... OK
+  Applying auth.0011_update_proxy_permissions... OK
+  Applying auth.0012_alter_user_first_name_max_length... OK
+  Applying home.0001_initial... OK
+  Applying sessions.0001_initial... OK
 ```
 
-### API TESTING
+### Extract Data
+
+`extract_data` is a management command to extract and load the data into the table. 
+
+```
+(.weather_env) renjithsraj@daemon-2 weather % python manage.py extract_data
+
+ Extracting weather data from given path
+Weather directory contain : 167
+Preparing weather data into dataframe before pushing to database
+Processing USC00257715
+Processing USC00113879
+Processing USC00127935
+........
+.....
+...
+.
+Processing USC00259090
+Preparation has been completed, pushing to database
+Total record count: 1729957
+Total data preparation time: 3.1130619049072266
+Successfully saved the weather data into database
+Total elapsed time: 67.87534189224243
+```
+
+### Generate Weather Stts analysis data
+
+`generate_weather_stats` is management command to generate the analysis data from weather data loaded in last step.
+
+(.weather_env) daemon-2 weather % python manage.py generate_weather_stats
+Extracting data from WeatherData to Process data analysis
+Total WeatherData count: 4820
+Successfully inserted analysed data into WeatherDataStats
+```
+
+### Run Application
+
+#### Create Super User
+
+```
+(.weather_env) daemon-2 weather % python manage.py createsuperuser
+Username (leave blank to use 'admin'): admin
+Email address: 
+Password: 
+Password (again): 
+The password is too similar to the username.
+This password is too short. It must contain at least 8 characters.
+This password is too common.
+Bypass password validation and create user anyway? [y/N]: y
+Superuser created successfully.
+```
+
+Run Application
+
+```
+(.weather_env) daemon-2 weather % python manage.py runserver
+Watching for file changes with StatReloader
+Performing system checks...
+
+System check identified no issues (0 silenced).
+February 17, 2023 - 17:19:06
+Django version 4.1.6, using settings 'weather.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CONTROL-C.
+```
+
+### API's
+
+- http://127.0.0.1:8000/api/weather
+- http://127.0.0.1:8000/api/weather/stats
+
+### Swagger API documentation [http://127.0.0.1:8000/doc/]
+
+- [ Swagger document](http://127.0.0.1:8000/doc/)
+
+### Screen Shots
+
+- Swagger Document 1
+
+![Swagger Document](https://github.com/Patel061274/weather/blob/main/pics/Screenshot%202023-02-17%20at%208.27.39%20PM.png)
+
+
+- Weather Data API
+
+![Weather Data API](https://github.com/Patel061274/weather/blob/main/pics/Screenshot%202023-02-17%20at%208.28.21%20PM.png)
+
+- Weather Data Stats API
+
+![Weather Data Stats API](https://github.com/Patel061274/weather/blob/main/pics/Screenshot%202023-02-17%20at%208.28.21%20PM.png)
+
+
+
+
+
 
 
 
