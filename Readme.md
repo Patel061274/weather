@@ -201,11 +201,13 @@ Quit the server with CONTROL-C.
 - http://127.0.0.1:8000/api/weather
 - http://127.0.0.1:8000/api/weather/stats
 
+```
+
 ### Swagger API documentation [http://127.0.0.1:8000/doc/]
 
 - [ Swagger document](http://127.0.0.1:8000/doc/)
 
-```
+
 
 ### Screen Shots
 
